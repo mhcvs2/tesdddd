@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>改善用户体验到表单</title>
+    <style>
+        #pwdLvSpan{display:inline-block;width:100px;height:5px;background:#c3c3c3;}
+        #pwdLvSpan i{display:block;background:green;height:5px;width:0;}
+    </style>
 </head>
 <body>
 <form method="post" action="" onsubmit="return eg.regCheck();">
     <input type="hidden" name="" id="errnum" value="0"/>
     账户： <input type="text" name="" id="userid"/><br /><br />
     密码： <input type="password" name="" id="userpwd"/>
-    密码强度 <span id="pwdLvSpan"><i id="pwdLv"></i> </span><br /><br />
+    密码强度 <span id="pwdLvSpan"><i id="pwdLv"></i></span><br /><br />
     确认： <input type="password" name="" id="userpwd2"/><br /><br />
     性别： <input type="radio" name="sex" value="1" checked="checked">男
           <input type="radio" name="sex" value="0"/>女 <br /><br />
@@ -55,13 +59,13 @@
       return elements;
     };
 
-    eg.addListener = function (target, type, handler) {
+    eg.addListener = function(target,type,handler){
         if(target.addEventListener){
-            target.addEventListener(type, handler, false);
-        } else if(target.attachEvent){
-            target.attachEvent("on"+type, handler);
-        }else {
-            target["on"+type] = handler;
+            target.addEventListener(type,handler,false);
+        }else if(target.attachEvent){
+            target.attachEvent("on"+type,handler);
+        }else{
+            target["on"+type]=handler;
         }
     };
 
@@ -101,7 +105,7 @@
         var likes = eg.getElementsByClassName("like");
         var likeNum = 0;
         for(var n=0; n<likes.length; n++){
-            console.log(likes[n].checked)
+            console.log(likes[n].checked);
             if(likes[n].checked){
                 likeNum++;
             }
@@ -121,26 +125,26 @@
         return true;
     };
 
-    eg.addEvent = function () {
+    eg.addEvent = function(){
         var pwd = eg.$("userpwd");
-        eg.addListener(pwd, "keyup", function () {
-           var lv = 0;
-           if(/^\d{4,}$/.test(pwd.value)){
-               lv = 10;
-           }else if(/^\w{4,}$/.test(pwd.value)){
-               lv = 25;
-           }else if(/^\d\w{4,}$/.test(pwd.value)){
-               lv = 25;
-           }else if(/^\w{4,}$/.test(pwd.value)){
-               lv = 50;
-           }else if(/^\d\w~!@#$%\^&*\(\)\-{}\[\]=<>,\.\?\/]{4,}$/.test(pwd.value)){
-               lv = 100;
-           }else{
-               lv = 0;
-           }
-           eg.$("pwdLv").style.width = lv+"px";
+        eg.addListener(pwd,"keyup",function(){
+            var lv=0;
+            if(/^\d{4,}$/.test(pwd.value)){
+                lv = 10;
+            }else if(/^\w{4,}$/.test(pwd.value)){
+                lv = 25;
+            }else if (/^[\d\w]{4,}$/.test(pwd.value)){
+                lv = 50;
+            }else if (/^[\d\w~!@#$%\^&*\(\)\-{}\[\]=<>,\.\?\/]{4,}$/.test(pwd.value)){
+                lv = 100;
+            }else if(pwd.value.length<6 && pwd.value.length>3){
+                lv = 60;
+            }else if(pwd.value.length<4){
+                lv = 0;
+            }
+            eg.$("pwdLv").style.width = lv+"px";
         });
-    };
+    }
     eg.addEvent();
 
     eg.err = function () {
