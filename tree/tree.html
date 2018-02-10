@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>javascript base tree</title>
+</head>
+<body>
+<div id="mytree"></div>
+</body>
+</html>
+<script src="../base.js"></script>
+<script>
+    var dic = {
+        "0" : {pid:-1,cn:'本书目录',url:'/'}
+        ,"1" : {pid:0,cn:'第1章 JavaScript概述',url:'/01'}
+        ,"2" : {pid:0,cn:'第2章 用JavaScript验证表单',url:'/02'}
+        ,"11" : {pid:1,cn:'1.1 认识JavaScript',url:'#'}
+        ,"12" : {pid:1,cn:'1.2 配置JavaScript开发环境',url:'#'}
+        ,"3" : {pid:0,cn:'第3章 JavaScript实现的照片展示',url:'/03'}
+        ,"21" : {pid:2,cn:'2.1  最简单的表单验证 – 禁止空白的必填项目',url:'#'}
+        ,"22" : {pid:2,cn:'2.2  处理各种类型的表单元素',url:'#'}
+        ,"23" : {pid:2,cn:'2.3  输入的邮箱地址正确吗？用正则来校验复杂的格式要求',url:'#'}
+        ,"24" : {pid:2,cn:'2.4  改善用户体验',url:'#'}
+        ,"31" : {pid:3,cn:'3.1  功能设计',url:'#'}
+        ,"32" : {pid:3,cn:'3.2  照片加载与定位',url:'#'}
+        ,"33" : {pid:3,cn:'3.3  响应鼠标动作',url:'#'}
+    };
+    for (var i in dic) {
+        if (dic[i].pid !== undefined) {
+            var pid = dic[i].pid;
+            if(dic[pid]) {
+                dic[pid].child || (dic[pid].child = []);
+                dic[pid].child.push(i);
+            }
+        }
+    }
+
+    var z3fTree = function (el, pid) {
+        var ul = document.createElement("ul");
+        for(var i in dic){
+            if(dic[i].pid == pid){
+                console.log(i);
+                var dl = dic[i];
+                var li = document.createElement("li");
+                li.innerHTML = '<a href="' + dl.url + '">' + dl.cn + '</a>';
+                if(dl.child && dl.child.length>0){
+                    z3fTree(li, i.toString());
+                }
+                ul.appendChild(li);
+            }
+        }
+        el.appendChild(ul);
+    };
+
+    z3fTree(eg.$("mytree"), -1);
+</script>
