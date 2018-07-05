@@ -1,0 +1,12 @@
+<VirtualHost {%APP_HOST%}:{%APP_PORT%}>
+  DocumentRoot /app
+
+  ProxyPass "/api" "{%API_ADDRESS%}/api" retry=0
+  ProxyPassReverse  "/api"  "http://{%API_ADDRESS%}:8989/api"
+  ProxyPreserveHost On
+
+  <Directory "/app/">
+    Require all granted
+    AllowOverride All
+  </Directory>
+</VirtualHost>

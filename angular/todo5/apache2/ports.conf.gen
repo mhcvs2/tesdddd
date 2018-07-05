@@ -1,0 +1,5 @@
+Listen {%APP_HOST%}:{%APP_PORT%}
+
+<IfModule mod_gnutls.c>
+        Listen 80
+</IfModule>

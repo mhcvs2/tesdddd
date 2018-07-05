@@ -14,7 +14,8 @@ const httpOptions = {
 })
 export class TodoService {
 
-  private api_url = 'http://localhost:8989/api/todos';
+  // private api_url = 'http://localhost:8989/api/todos';
+    private api_url = '/api/todos';
 
   constructor(private http: HttpClient) { }
 
